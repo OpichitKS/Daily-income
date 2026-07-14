@@ -40,9 +40,7 @@ function render(){
   const titheBase=Math.max(0,totals.profit);
   const tithe=Math.ceil(titheBase*0.10);
   const titheAmount=document.querySelector('#titheAmount');
-  const titheWeekRange=document.querySelector('#titheWeekRange');
   if(titheAmount) titheAmount.textContent='฿'+tithe.toLocaleString('th-TH');
-  if(titheWeekRange) titheWeekRange.textContent=`${thaiDate(start)} – ${thaiDate(end)} • กำไรสุทธิรวม ${fmt(totals.profit)} × 10%`;
 
   document.querySelectorAll('tr.has-data').forEach(tr=>tr.onclick=()=>loadRecord(tr.dataset.date));
 }

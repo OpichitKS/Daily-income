@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <title>บันทึกรายได้รายวัน</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand-title">
+        <p class="eyebrow">WORK DAILY</p>
+        <h1>บันทึกรายได้</h1>
+      </div>
+      <button id="themeToggle" class="theme-toggle icon-only" type="button" aria-label="สลับโหมดสี" title="สลับโหมดสี">
+        <span id="themeIcon">🌙</span>
+        <span id="themeLabel" class="sr-only">Dark Mode</span>
+      </button>
+      <div class="header-actions">
+        <div class="week-nav">
+          <button id="prevWeek" class="week-arrow" type="button" aria-label="สัปดาห์ก่อนหน้า">‹</button>
+          <label class="week-picker-wrap" title="เลือกวันที่เพื่อดูสัปดาห์นั้น">
+            <span id="weekRange" class="week-badge"></span>
+            <input id="weekPicker" class="week-picker-input" type="date" aria-label="เลือกวันที่ของสัปดาห์ที่ต้องการดู" />
+          </label>
+          <button id="nextWeek" class="week-arrow" type="button" aria-label="สัปดาห์ถัดไป">›</button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="เมนูหลัก">
+      <button class="tab active" data-page="records">บันทึกรายได้</button>
+      <button class="tab" data-page="payment">ข้อมูลรับเงิน</button>
+    </nav>
+
+    <main>
+      <section id="records" class="page active">
+        <div class="card form-card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">DAILY ENTRY</p>
+              <h2>เพิ่มข้อมูลวันนี้</h2>
+            </div>
+            <input id="date" type="date" aria-label="วันที่" />
+          </div>
+
+          <div class="form-grid">
+            <label>
+              <span>รายได้ (บาท)</span>
+              <input id="income" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00" />
+            </label>
+            <label>
+              <span>ระยะทาง (กม.)</span>
+              <input id="distance" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0" />
+            </label>
+          </div>
+
+          <div class="calc-grid">
+            <div class="metric">
+              <span>ค่าน้ำมัน</span>
+              <strong id="fuel">฿0.00</strong>
+              <small>ระยะทาง × 1.5</small>
+            </div>
+            <div class="metric">
+              <span>ค่าเสื่อม</span>
+              <strong id="depreciation">฿0.00</strong>
+              <small>ระยะทาง × 1</small>
+            </div>
+            <div class="metric profit">
+              <span>รายได้สุทธิ</span>
+              <strong id="profit">฿0.00</strong>
+              <small>รายได้ − ค่าใช้จ่าย</small>
+            </div>
+          </div>
+
+          <button id="saveBtn" class="primary">บันทึกข้อมูล</button>
+          <p id="status" class="status" aria-live="polite"></p>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">CURRENT WEEK</p>
+              <h2><span id="weekSummaryTitle">สรุปสัปดาห์ปัจจุบัน</span></h2>
+            </div>
+            <button id="clearWeek" class="ghost">ล้างข้อมูลสัปดาห์นี้</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>วัน</th>
+                  <th>รายได้</th>
+                  <th>ระยะทาง</th>
+                  <th>ค่าน้ำมัน</th>
+                  <th>ค่าเสื่อม</th>
+                  <th>รายได้สุทธิ</th>
+                </tr>
+              </thead>
+              <tbody id="weekBody"></tbody>
+              <tfoot id="weekFoot"></tfoot>
+            </table>
+          </div>
+          <p class="hint">แตะแถวของวันที่มีข้อมูลเพื่อแก้ไขรายการ</p>
+        </div>
+
+        <div class="card tithe-card">
+          <div>
+            <p class="eyebrow">WEEKLY TITHE</p>
+            <h2>ยอดถวายสิบลดประจำสัปดาห์</h2>
+
+          </div>
+          <div class="tithe-result">
+            <span>ยอดถวายสิบลด</span>
+            <strong id="titheAmount">฿0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="payment" class="page">
+        <div class="card payment-card">
+          <p class="eyebrow">PAYMENT</p>
+          <h2>ข้อมูลรับเงิน</h2>
+          <p class="muted">QR และข้อมูลบัญชีแยกจากหน้าบันทึกรายได้</p>
+          <div class="qr-frame">
+            <img src="assets/payment-qr.jpeg" alt="QR สำหรับรับเงิน" />
+          </div>
+          <div class="account">
+            <div><span>ธนาคาร</span><strong>ธนาคารกสิกรไทย</strong></div>
+            <div><span>เลขบัญชี</span><strong>541-2-01767-8</strong></div>
+            <div><span>ชื่อบัญชี</span><strong>นายโอภิชิต ขันสังข์</strong></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

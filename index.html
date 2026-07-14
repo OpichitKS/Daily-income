@@ -12,15 +12,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="บันทึกรายได้" />
   <link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
+<body><div id="authGate" class="auth-gate"><div class="auth-card"><p class="eyebrow">DAILY INCOME CLOUD</p><h2>เข้าสู่ระบบ</h2><label><span>อีเมล</span><input id="authEmail" type="email"></label><label><span>รหัสผ่าน</span><input id="authPassword" type="password"></label><button id="loginBtn" class="primary">เข้าสู่ระบบ</button><p id="authStatus" class="status"></p></div></div>
   <div class="app">
     <header class="topbar">
       <div class="brand-title">
         <p class="eyebrow">WORK DAILY</p>
         <h1>บันทึกรายได้</h1>
       </div>
-      <button id="themeToggle" class="theme-toggle icon-only" type="button" aria-label="สลับโหมดสี" title="สลับโหมดสี">
+      <button id="logoutBtn" class="logout-btn" type="button">↪</button><button id="themeToggle" class="theme-toggle icon-only" type="button" aria-label="สลับโหมดสี" title="สลับโหมดสี">
         <span id="themeIcon">🌙</span>
         <span id="themeLabel" class="sr-only">Dark Mode</span>
       </button>

@@ -101,3 +101,4 @@ html[data-theme="dark"] .tithe-result strong{color:#f5b700}
 .import-btn{display:inline-flex;align-items:center;justify-content:center}
 html[data-theme="dark"] .backup-btn{background:var(--soft);color:var(--text)}
 @media(max-width:700px){.backup-card{display:block}.backup-actions{margin-top:16px}.backup-btn{flex:1;text-align:center}}
+.auth-gate{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}.auth-gate.hidden{display:none}.auth-card{width:min(420px,100%);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px}.auth-card label{display:block;margin:16px 0}.auth-card label span{display:block;color:var(--muted);font-size:13px;margin-bottom:7px}.logout-btn{position:absolute;right:56px;top:50%;transform:translateY(-50%);width:42px;height:42px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);cursor:pointer}

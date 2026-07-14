@@ -153,3 +153,40 @@ if(importInput){
     }
   });
 }
+
+const SUPABASE_URL='https://efuryjvcyqnuqgzkajrd.supabase.co';
+const SUPABASE_KEY='sb_publishable_3ZqafiZpbw95qWF2Wnc1lA_CC2Y5TjS';
+const cloud=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentUser=null;
+async function loadCloud(){
+ const {data,error}=await cloud.from('daily_records').select('*').eq('user_id',currentUser.id);
+ if(error){console.error(error);return} records={};
+ (data||[]).forEach(r=>records[r.record_date]={income:+r.income,distance:+r.distance,fuel:+r.fuel,depreciation:+r.depreciation,profit:+r.net_income});
+ render();
+}
+async function saveCloud(){
+ if(!currentUser)return;if(!dateInput.value)return;
+ const r=calc(),row={user_id:currentUser.id,record_date:dateInput.value,income:r.income,distance:r.distance,fuel:r.fuel,depreciation:r.depreciation,net_income:r.profit,updated_at:new Date().toISOString()};
+ const {error}=await cloud.from('daily_records').upsert(row,{onConflict:'user_id,record_date'});
+ if(error){$('#status').textContent='บันทึกไม่สำเร็จ: '+error.message;return}records[dateInput.value]=r;render();$('#status').textContent='บันทึกลง Database เรียบร้อยแล้ว';
+}
+async function clearCloud(){
+ if(!confirm('ต้องการล้างข้อมูลทั้งหมดของสัปดาห์ที่กำลังแสดงใช่ไหม?'))return;
+ const s=new Date(selectedWeekStart),e=addDays(s,6);
+ const {error}=await cloud.from('daily_records').delete().eq('user_id',currentUser.id).gte('record_date',localISO(s)).lte('record_date',localISO(e));
+ if(error){$('#status').textContent=error.message;return}await loadCloud();
+}
+async function migrateLocal(){
+ const old=JSON.parse(localStorage.getItem(STORAGE)||'{}'),entries=Object.entries(old),key='cloud-migrated-'+currentUser.id;
+ if(!entries.length||localStorage.getItem(key))return;
+ if(!confirm(`พบข้อมูลเดิม ${entries.length} วัน ต้องการย้ายขึ้น Supabase หรือไม่?`))return;
+ const rows=entries.map(([d,r])=>({user_id:currentUser.id,record_date:d,income:+(r.income||0),distance:+(r.distance||0),fuel:+(r.fuel||0),depreciation:+(r.depreciation||0),net_income:+(r.profit??r.net_income??0)}));
+ const {error}=await cloud.from('daily_records').upsert(rows,{onConflict:'user_id,record_date'});if(!error){localStorage.setItem(key,'1');await loadCloud();alert('ย้ายข้อมูลสำเร็จ')}
+}
+async function sessionOn(session){currentUser=session?.user||null;document.querySelector('#authGate').classList.toggle('hidden',!!currentUser);if(currentUser){await loadCloud();await migrateLocal()}}
+document.querySelector('#loginBtn').onclick=async()=>{const status=document.querySelector('#authStatus');const {data,error}=await cloud.auth.signInWithPassword({email:document.querySelector('#authEmail').value.trim(),password:document.querySelector('#authPassword').value});if(error){status.textContent=error.message;return}await sessionOn(data.session)};
+document.querySelector('#logoutBtn').onclick=()=>cloud.auth.signOut();
+cloud.auth.onAuthStateChange((_e,s)=>setTimeout(()=>sessionOn(s),0));
+(async()=>{const {data:{session}}=await cloud.auth.getSession();await sessionOn(session)})();
+document.querySelector('#saveBtn').onclick=saveCloud;
+document.querySelector('#clearWeek').onclick=clearCloud;

@@ -69,3 +69,8 @@ html[data-theme="dark"] .week-arrow:hover{border-color:#f5b700;color:#f5b700}
   .week-arrow{width:34px;height:34px}
   .week-badge{white-space:nowrap}
 }
+
+.week-picker-wrap{position:relative;display:inline-flex;cursor:pointer}
+.week-picker-wrap .week-badge{display:block;pointer-events:none}
+.week-picker-input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+html[data-theme="dark"] .week-picker-wrap{border-radius:999px}

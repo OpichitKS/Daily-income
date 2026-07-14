@@ -21,7 +21,10 @@
         </button>
         <div class="week-nav">
           <button id="prevWeek" class="week-arrow" type="button" aria-label="สัปดาห์ก่อนหน้า">‹</button>
-          <button id="weekRange" class="week-badge" type="button" title="กลับไปสัปดาห์ปัจจุบัน"></button>
+          <label class="week-picker-wrap" title="เลือกวันที่เพื่อดูสัปดาห์นั้น">
+            <span id="weekRange" class="week-badge"></span>
+            <input id="weekPicker" class="week-picker-input" type="date" aria-label="เลือกวันที่ของสัปดาห์ที่ต้องการดู" />
+          </label>
           <button id="nextWeek" class="week-arrow" type="button" aria-label="สัปดาห์ถัดไป">›</button>
         </div>
       </div>

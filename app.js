@@ -23,6 +23,8 @@ function render(){
   const title=document.querySelector('#weekSummaryTitle');
   if(title) title.textContent=isCurrent?'สรุปสัปดาห์ปัจจุบัน':'สรุปสัปดาห์ย้อนหลัง';
   $('#weekRange').textContent=`${thaiDate(start)} – ${thaiDate(end)}`;
+  const weekPicker=document.querySelector('#weekPicker');
+  if(weekPicker) weekPicker.value=localISO(start);
   const names=['จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์','อาทิตย์'];
   let totals={income:0,distance:0,fuel:0,depreciation:0,profit:0};
   $('#weekBody').innerHTML=names.map((name,i)=>{
@@ -63,18 +65,26 @@ document.querySelectorAll('.tab').forEach(btn=>btn.onclick=()=>{
   btn.classList.add('active'); $('#'+btn.dataset.page).classList.add('active');
 });
 
-document.querySelector('#prevWeek').onclick=()=>{
+
+const prevWeekBtn=document.querySelector('#prevWeek');
+const nextWeekBtn=document.querySelector('#nextWeek');
+const weekPicker=document.querySelector('#weekPicker');
+
+prevWeekBtn.addEventListener('click',()=>{
   selectedWeekStart=addDays(selectedWeekStart,-7);
   render();
-};
-document.querySelector('#nextWeek').onclick=()=>{
+});
+
+nextWeekBtn.addEventListener('click',()=>{
   selectedWeekStart=addDays(selectedWeekStart,7);
   render();
-};
-document.querySelector('#weekRange').onclick=()=>{
-  selectedWeekStart=weekStart(new Date());
+});
+
+weekPicker.addEventListener('change',()=>{
+  if(!weekPicker.value) return;
+  selectedWeekStart=weekStart(parseISO(weekPicker.value));
   render();
-};
+});
 
 dateInput.value=localISO(); calc(); render();
 

@@ -110,3 +110,46 @@ applyTheme(savedTheme || (preferredDark?'dark':'light'));
 document.querySelector('#themeToggle').onclick=()=>{
   applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 };
+
+const exportBtn=document.querySelector('#exportData');
+const importInput=document.querySelector('#importData');
+const backupStatus=document.querySelector('#backupStatus');
+
+if(exportBtn){
+  exportBtn.addEventListener('click',()=>{
+    const payload={app:'Daily Income',version:1,exportedAt:new Date().toISOString(),records};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=`daily-income-backup-${localISO()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    if(backupStatus) backupStatus.textContent='Export ข้อมูลเรียบร้อยแล้ว';
+  });
+}
+
+if(importInput){
+  importInput.addEventListener('change',async()=>{
+    const file=importInput.files && importInput.files[0];
+    if(!file) return;
+    try{
+      const data=JSON.parse(await file.text());
+      const imported=data && data.records ? data.records : data;
+      if(!imported || typeof imported!=='object' || Array.isArray(imported)) throw new Error();
+      const count=Object.keys(imported).length;
+      if(confirm(`พบข้อมูล ${count} วัน ต้องการ Import หรือไม่? ข้อมูลวันที่ซ้ำจะใช้ข้อมูลจากไฟล์ Backup`)){
+        records={...records,...imported};
+        localStorage.setItem(STORAGE,JSON.stringify(records));
+        render();
+        if(backupStatus) backupStatus.textContent=`Import สำเร็จ ${count} วัน`;
+      }
+    }catch(e){
+      if(backupStatus) backupStatus.textContent='Import ไม่สำเร็จ: ไฟล์ Backup ไม่ถูกต้อง';
+    }finally{
+      importInput.value='';
+    }
+  });
+}

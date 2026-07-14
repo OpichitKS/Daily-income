@@ -37,6 +37,13 @@ function render(){
     </tr>`;
   }).join('');
   $('#weekFoot').innerHTML=`<tr><td>รวมสัปดาห์</td><td>${fmt(totals.income)}</td><td>${totals.distance.toLocaleString('th-TH')} กม.</td><td>${fmt(totals.fuel)}</td><td>${fmt(totals.depreciation)}</td><td>${fmt(totals.profit)}</td></tr>`;
+  const titheBase=Math.max(0,totals.profit);
+  const tithe=Math.ceil(titheBase*0.10);
+  const titheAmount=document.querySelector('#titheAmount');
+  const titheWeekRange=document.querySelector('#titheWeekRange');
+  if(titheAmount) titheAmount.textContent='฿'+tithe.toLocaleString('th-TH');
+  if(titheWeekRange) titheWeekRange.textContent=`${thaiDate(start)} – ${thaiDate(end)} • กำไรสุทธิรวม ${fmt(totals.profit)} × 10%`;
+
   document.querySelectorAll('tr.has-data').forEach(tr=>tr.onclick=()=>loadRecord(tr.dataset.date));
 }
 function loadRecord(key){

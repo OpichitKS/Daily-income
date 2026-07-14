@@ -10,15 +10,15 @@
 <body>
   <div class="app">
     <header class="topbar">
-      <div>
+      <div class="brand-title">
         <p class="eyebrow">WORK DAILY</p>
         <h1>บันทึกรายได้</h1>
       </div>
+      <button id="themeToggle" class="theme-toggle icon-only" type="button" aria-label="สลับโหมดสี" title="สลับโหมดสี">
+        <span id="themeIcon">🌙</span>
+        <span id="themeLabel" class="sr-only">Dark Mode</span>
+      </button>
       <div class="header-actions">
-        <button id="themeToggle" class="theme-toggle" type="button" aria-label="สลับโหมดสี">
-          <span id="themeIcon">🌙</span>
-          <span id="themeLabel">Dark Mode</span>
-        </button>
         <div class="week-nav">
           <button id="prevWeek" class="week-arrow" type="button" aria-label="สัปดาห์ก่อนหน้า">‹</button>
           <label class="week-picker-wrap" title="เลือกวันที่เพื่อดูสัปดาห์นั้น">
@@ -105,6 +105,19 @@
             </table>
           </div>
           <p class="hint">แตะแถวของวันที่มีข้อมูลเพื่อแก้ไขรายการ</p>
+        </div>
+
+        <div class="card tithe-card">
+          <div>
+            <p class="eyebrow">WEEKLY TITHE</p>
+            <h2>ยอดถวายสิบลดประจำสัปดาห์</h2>
+            <p class="muted" id="titheWeekRange">คำนวณจากกำไรสุทธิรวมของสัปดาห์ที่เลือก × 10%</p>
+          </div>
+          <div class="tithe-result">
+            <span>ยอดถวาย</span>
+            <strong id="titheAmount">฿0</strong>
+            <small>ปัดเศษขึ้นเป็นจำนวนเต็มเสมอ</small>
+          </div>
         </div>
       </section>
 

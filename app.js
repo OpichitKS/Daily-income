@@ -58,3 +58,21 @@ document.querySelectorAll('.tab').forEach(btn=>btn.onclick=()=>{
   btn.classList.add('active'); $('#'+btn.dataset.page).classList.add('active');
 });
 dateInput.value=localISO(); calc(); render();
+
+
+const THEME_KEY='daily-income-theme-v1';
+function applyTheme(theme){
+  document.documentElement.dataset.theme=theme;
+  localStorage.setItem(THEME_KEY,theme);
+  const dark=theme==='dark';
+  const icon=document.querySelector('#themeIcon');
+  const label=document.querySelector('#themeLabel');
+  if(icon) icon.textContent=dark?'☀️':'🌙';
+  if(label) label.textContent=dark?'Light Mode':'Dark Mode';
+}
+const savedTheme=localStorage.getItem(THEME_KEY);
+const preferredDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(savedTheme || (preferredDark?'dark':'light'));
+document.querySelector('#themeToggle').onclick=()=>{
+  applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+};

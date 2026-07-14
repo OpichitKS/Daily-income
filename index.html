@@ -124,6 +124,20 @@
             <strong id="titheAmount">฿0</strong>
           </div>
         </div>
+      <div class="card backup-card">
+          <div>
+            <p class="eyebrow">DATA BACKUP</p>
+            <h2>สำรองและย้ายข้อมูล</h2>
+            <p class="muted">ใช้สำหรับย้ายข้อมูลระหว่าง Safari และ WebApp บนหน้าจอโฮม</p>
+          </div>
+          <div class="backup-actions">
+            <button id="exportData" class="backup-btn" type="button">Export ข้อมูล</button>
+            <label class="backup-btn import-btn">Import ข้อมูล
+              <input id="importData" type="file" accept=".json,application/json" hidden>
+            </label>
+          </div>
+          <p id="backupStatus" class="status" aria-live="polite"></p>
+        </div>
       </section>
 
       <section id="payment" class="page">

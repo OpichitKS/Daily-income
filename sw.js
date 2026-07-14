@@ -1,4 +1,4 @@
-const C='daily-income-pwa-v1';
+const C='daily-income-pwa-v10';
 self.addEventListener('install',e=>{self.skipWaiting()});
 self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',e=>{

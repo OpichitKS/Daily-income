@@ -19,7 +19,11 @@
           <span id="themeIcon">🌙</span>
           <span id="themeLabel">Dark Mode</span>
         </button>
-        <div class="week-badge" id="weekRange"></div>
+        <div class="week-nav">
+          <button id="prevWeek" class="week-arrow" type="button" aria-label="สัปดาห์ก่อนหน้า">‹</button>
+          <button id="weekRange" class="week-badge" type="button" title="กลับไปสัปดาห์ปัจจุบัน"></button>
+          <button id="nextWeek" class="week-arrow" type="button" aria-label="สัปดาห์ถัดไป">›</button>
+        </div>
       </div>
     </header>
 
@@ -76,7 +80,7 @@
           <div class="section-head">
             <div>
               <p class="eyebrow">CURRENT WEEK</p>
-              <h2>สรุปสัปดาห์ปัจจุบัน</h2>
+              <h2><span id="weekSummaryTitle">สรุปสัปดาห์ปัจจุบัน</span></h2>
             </div>
             <button id="clearWeek" class="ghost">ล้างข้อมูลสัปดาห์นี้</button>
           </div>

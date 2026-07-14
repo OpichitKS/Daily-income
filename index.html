@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0f14" />
-  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#111827" />
   <title>บันทึกรายได้รายวัน</title>
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png" />
@@ -124,20 +123,6 @@
             <strong id="titheAmount">฿0</strong>
           </div>
         </div>
-      <div class="card backup-card">
-          <div>
-            <p class="eyebrow">DATA BACKUP</p>
-            <h2>สำรองและย้ายข้อมูล</h2>
-            <p class="muted">ใช้สำหรับย้ายข้อมูลระหว่าง Safari และ WebApp บนหน้าจอโฮม</p>
-          </div>
-          <div class="backup-actions">
-            <button id="exportData" class="backup-btn" type="button">Export ข้อมูล</button>
-            <label class="backup-btn import-btn">Import ข้อมูล
-              <input id="importData" type="file" accept=".json,application/json" hidden>
-            </label>
-          </div>
-          <p id="backupStatus" class="status" aria-live="polite"></p>
-        </div>
       </section>
 
       <section id="payment" class="page">
@@ -159,10 +144,5 @@
   </div>
 
   <script src="app.js"></script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
-}
-</script>
 </body>
 </html>
